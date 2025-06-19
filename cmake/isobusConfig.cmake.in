@@ -5,3 +5,5 @@ if (NOT WIN32)
 	# Add the targets file
 	include("${CMAKE_CURRENT_LIST_DIR}/isobusTargets.cmake")
 endif()
+
+set(isobus_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/../../../include")

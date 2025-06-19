@@ -8,6 +8,8 @@ project(
     "A control function focused implementation of the major ISOBUS and J1939 transport layers"
 )
 
+find_package(ament_cmake REQUIRED)
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
@@ -59,6 +61,8 @@ add_subdirectory("hardware_integration")
 
 option(BUILD_EXAMPLES "Set to ON to enable building of examples from top level"
        OFF)
+# Set the variable BUILD_EXAMPLES to TRUE
+set(BUILD_EXAMPLES ON)
 if(BUILD_EXAMPLES)
   add_subdirectory("examples/transport_layer")
   add_subdirectory("examples/diagnostic_protocol")
@@ -128,3 +132,54 @@ set(CPACK_DEBIAN_PACKAGE_HOMEPAGE
 set(CPACK_PACKAGE_VENDOR "Open-Agriculture")
 set(CPACK_COMPONENTS_GROUPING ALL_COMPONENTS_IN_ONE)
 include(CPack)
+
+include_directories(
+    utility/include/isobus
+    isobus/include/isobus
+    hardware_integration/include/isobus
+)
+
+ament_export_include_directories(
+    utility/include/isobus
+    isobus/include/isobus
+    hardware_integration/include/isobus
+)
+
+target_link_libraries(Isobus PUBLIC Threads::Threads)
+ament_target_dependencies(Isobus)
+
+ament_export_libraries(
+  Isobus  # Replace with the actual library name
+)
+
+# Install include files
+install(
+  DIRECTORY  utility/include/isobus
+  DESTINATION include
+)
+
+install(
+  DIRECTORY  isobus/include/isobus
+  DESTINATION include
+)
+
+install(
+  DIRECTORY  hardware_integration/include/isobus
+  DESTINATION include
+)
+
+# Install rules
+install(TARGETS Isobus
+  EXPORT export_isobus
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+install(DIRECTORY isobus/include/ DESTINATION include)
+install(DIRECTORY utility/include/ DESTINATION include)
+install(DIRECTORY hardware_integration/include/ DESTINATION include)
+
+# Export ament package information
+ament_export_targets(export_isobus HAS_LIBRARY_TARGET)
+ament_package()

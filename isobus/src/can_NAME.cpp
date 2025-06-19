@@ -21,6 +21,17 @@ namespace isobus
 		return this->rawName == obj.rawName;
 	}
 
+	bool NAME::operator<(const NAME &obj) const
+	{
+		return this->get_device_class() == obj.get_device_class() &&
+		       this->get_device_class_instance() == obj.get_device_class_instance() &&
+		       this->get_function_code() == obj.get_function_code() &&
+		       this->get_function_instance() == obj.get_function_instance() &&
+		       this->get_ecu_instance() == obj.get_ecu_instance() &&
+		       this->get_manufacturer_code() == obj.get_manufacturer_code() &&
+		       this->get_identity_number() < obj.get_identity_number();
+	}
+
 	bool NAME::get_arbitrary_address_capable() const
 	{
 		return (0 != (rawName >> 63));
