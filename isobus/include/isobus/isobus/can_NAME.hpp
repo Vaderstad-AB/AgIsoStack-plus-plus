@@ -426,6 +426,7 @@ namespace isobus
 		/// @param[in] obj The rhs of the operator
 		/// @returns `true` if the objects are "equal"
 		bool operator==(const NAME &obj) const;
+		bool operator<(const NAME &obj) const;
 
 		/// @brief A structure that tracks the pair of a NAME parameter and associated value
 		using NameParameterFilter = std::pair<const NAMEParameters, const std::uint32_t>;

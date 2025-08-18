@@ -87,6 +87,7 @@ namespace isobus
 		/// @param[in] NAMEToCheck The NAME to check against this control function's filters
 		/// @returns true if this control function matches the NAME that was passed in, false otherwise
 		bool check_matches_name(NAME NAMEToCheck) const;
+		std::vector<ParameterGroupNumberCallbackData> parameterGroupNumberCallbacks; ///< A list of all parameter group number callbacks associated with this control function
 
 	private:
 		friend class CANNetworkManager; ///< Allows the network manager to use get_parameter_group_number_callback
@@ -97,7 +98,6 @@ namespace isobus
 		ParameterGroupNumberCallbackData &get_parameter_group_number_callback(std::size_t index);
 
 		const std::vector<NAMEFilter> NAMEFilterList; ///< A list of NAME parameters that describe this control function's identity
-		std::vector<ParameterGroupNumberCallbackData> parameterGroupNumberCallbacks; ///< A list of all parameter group number callbacks associated with this control function
 		bool initialized = false; ///< A way to track if the network manager has processed this CF against existing CFs
 	};
 
